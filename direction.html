@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA & Enjeux Stratégiques - Guide Direction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: #2c2c2c;
+        }
+
+        header {
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 100%);
+            color: #FFDD00;
+            padding: 3rem 2rem;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 5px solid #FFDD00;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(255,221,0,0.1)"/><circle cx="90" cy="20" r="1" fill="rgba(255,221,0,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,221,0,0.1)"/></svg>');
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+            margin-left: 20px;
+            transform: rotate(-2deg);
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-top: 0.5rem;
+            color: #FFDD00;
+            font-style: italic;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: none;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        section {
+            margin-bottom: 0.5rem;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 1.5rem;
+            grid-template-areas:
+                "title title"
+                "content sidebar";
+        }
+
+        section h2 {
+            grid-area: title;
+            color: #1a1a1a;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(90deg, #FFDD00, #FFB700);
+            margin: 10px auto 0;
+            border-radius: 5px;
+        }
+
+        .section-content {
+            grid-area: content;
+            min-width: 0;
+        }
+
+        .section-sidebar {
+            grid-area: sidebar;
+            position: relative;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #FFDD00 0%, #FFB700 100%);
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(255, 221, 0, 0.3);
+            font-weight: 500;
+        }
+
+        .dummy-tip {
+            background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .dummy-tip::before {
+            content: '💡';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .dummy-warning {
+            background: linear-gradient(135deg, #FF5722 0%, #E64A19 100%);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        .dummy-warning.moderate-warning {
+            background: linear-gradient(135deg, #FF9800 0%, #FFC107 100%);
+            color: #333;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .dummy-warning::before {
+            content: '⚠️';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 100%);
+            color: #FFDD00;
+            margin-top: 0.5rem;
+            border-top: 5px solid #FFDD00;
+        }
+
+        footer .logo-container {
+            margin-right: 2rem;
+        }
+
+        footer .logo-container img {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        footer p {
+            flex: 1;
+            margin: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 0.5rem auto;
+            display: block;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 3px solid #FFDD00;
+        }
+
+        ul {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            background: rgba(255, 221, 0, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #FFDD00;
+            position: relative;
+        }
+
+        .alert-item {
+            background: rgba(255, 87, 34, 0.1);
+            border-left: 4px solid #FF5722;
+        }
+
+        .warning-item {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #FF9800;
+        }
+
+        .info-item {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 4px solid #2196F3;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .en-savoir-plus {
+            background: rgba(248, 249, 250, 0.95);
+            border: 1px solid rgba(255, 221, 0, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .en-savoir-plus h4 {
+            font-size: 0.9rem;
+            color: #1a1a1a;
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .en-savoir-plus .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .en-savoir-plus .resource-title {
+            font-weight: 600;
+            color: #212529;
+            margin: 0.5rem 0 0.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        .en-savoir-plus .resource-author {
+            color: #6c757d;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .en-savoir-plus a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .en-savoir-plus:hover {
+            background: #fff;
+            border-color: #FFDD00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 221, 0, 0.3);
+        }
+
+        .framework-image-link img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(255, 221, 0, 0.5) !important;
+        }
+
+        @media (max-width: 1200px) {
+            section {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "title"
+                    "content"
+                    "sidebar";
+                gap: 1.2rem;
+            }
+
+            main {
+                max-width: 800px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header .subtitle {
+                font-size: 1rem;
+            }
+
+            main {
+                padding: 1rem;
+                max-width: 100%;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>IA & Enjeux Stratégiques 🌍</h1>
+            <p class="subtitle">Comprendre les coulisses et impacts sociétaux - Guide Direction</p>
+        </div>
+    </header>
+    <main>
+        <section id="introduction">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Au-delà de la technologie 🔍</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">
+                    Ce guide complète le document principal avec des enjeux stratégiques clés : énergie, infrastructures, géopolitique et approches collaboratives pour réussir votre transformation IA.
+                </p>
+            </div>
+            <div class="section-content">
+                <div class="highlight-box">
+                    <strong>📚 Au programme :</strong><br>
+                    🎯 Le sens avant la technologie : choisir l'outil adapté<br>
+                    🧠 Leadership Lab Crowd : mobiliser l'intelligence collective<br>
+                    🔍 Enjeux critiques : énergie, infrastructures, géopolitique et transparence<br>
+                </div>
+
+                <p style="font-size: 1rem; text-align: center; font-weight: 500; color: #2c2c2c; margin-top: 1rem;">
+                    <strong>Une synthèse pour décider en connaissance de cause ! 🌟</strong>
+                </p>
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus">
+                    <a href="index.html" target="_blank" style="text-decoration: none; color: inherit;">
+                        <span class="icon">🔗</span>
+                        <h4>DOCUMENT COMPLÉMENTAIRE</h4>
+                        <div class="resource-title">Guide Principal</div>
+                        <div class="resource-author">L'IA pour les nuls</div>
+                        <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                            Cliquez ici pour consulter le premier document.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="sens-avant-tech">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Le sens avant la technologie 🎯</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">
+                    L'IA n'est pas une solution universelle. Commencez par définir le besoin et le sens, puis choisissez l'outil adapté.
+                </p>
+            </div>
+            <div class="section-content">
+                <div class="dummy-warning moderate-warning">
+                    <strong>⚠️ Rappel essentiel :</strong> <br>
+                    La technologie ne va pas tout résoudre. Le sens et le besoin doivent toujours venir en premier, avant de choisir la solution.
+                </div>
+
+                <div class="dummy-tip" style="margin-top: 1rem;">
+                    <strong>💡 Pas toujours de l'IA générative :</strong><br>
+                    Parfois, des outils digitaux classiques (automatisation, bases de données structurées, tableaux de bord) sont plus appropriés, plus simples et plus efficaces que l'IA générative.<br>
+                    <br>
+                    <strong>La question à se poser :</strong> "Ai-je vraiment besoin d'IA pour ce problème, ou existe-t-il une solution plus simple et plus adaptée ?"
+                </div>
+                <div class="highlight-box" style="margin-top: 1rem;">
+                    <strong>🧭 Approche recommandée :</strong><br>
+                    1️⃣ Comprendre le besoin métier<br>
+                    2️⃣ Définir les critères de succès<br>
+                    3️⃣ Évaluer différentes solutions<br>
+                    4️⃣ Choisir l'outil le plus adapté (pas forcément de l'IA)<br>
+                    5️⃣ Mesurer l'impact réel
+                </div>
+
+                <div class="highlight-box" style="margin-top: 1rem; background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);">
+                    <strong>💡 Approche Nicolas Grenié (Développeur) :</strong><br>
+                    Mise à disposition d'outils avec agents IA à différents services pour créer rapidement des prototypes.<br>
+                    <br>
+                    <strong>L'objectif :</strong> Tester plusieurs approches, sélectionner celles qui fonctionnent vraiment, puis les améliorer (sécurité, architecture, performance, maintenabilité).<br>
+                    <br>
+                    → Prototyper vite, valider l'usage réel, puis industrialiser uniquement ce qui apporte de la valeur.
+                </div>
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus">
+                    <span class="icon">💬</span>
+                    <h4>TALK DEVOXX</h4>
+                    <div class="resource-title">Marjorie Canonne</div>
+                    <div class="resource-author">Approche pragmatique</div>
+                    <p style="font-size: 0.9rem; text-align: left; margin: 0.5rem 0; line-height: 1.5; font-style: italic; color: #1a1a1a; border-left: 3px solid #FFDD00; padding-left: 0.8rem;">
+                        "Les outils digitaux classiques sont parfois plus adaptés que l'IA générative. Ne cédez pas à l'effet de mode, privilégiez l'efficacité."
+                    </p>
+                </div>
+                <div class="en-savoir-plus" style="margin-top: 1rem;">
+                    <span class="icon">💬</span>
+                    <h4>TALK DEVOXX</h4>
+                    <div class="resource-title">Nicolas Grenié</div>
+                    <div class="resource-author">Développeur</div>
+                    <p style="font-size: 0.9rem; text-align: left; margin: 0.5rem 0; line-height: 1.5; font-style: italic; color: #1a1a1a; border-left: 3px solid #2196F3; padding-left: 0.8rem;">
+                        "Faut-il tout créer ? Ce n'est pas parce qu'on peut le faire qu'on doit le faire."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="leadership-lab">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Leadership Lab Crowd 🧠</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">
+                    Mobiliser l'intelligence collective de vos équipes pour co-créer votre stratégie IA : l'approche qui fait la différence entre adoption subie et transformation réussie.
+                </p>
+            </div>
+            <div class="section-content">
+                <div class="dummy-tip">
+                    <strong>💡 Le concept clé :</strong> Au lieu d'imposer l'IA de manière verticale, créez un espace où vos collaborateurs co-conçoivent, testent et valident les solutions. L'IA devient un amplificateur d'intelligence collective.
+                </div>
+
+                <div class="highlight-box" style="margin-top: 1rem;">
+                    <strong>🥪 Sandwich Team vs Pizza Team 🍕</strong><br>
+                    <strong>Sandwich Team :</strong> Équipe réduite, moins d'interlocuteurs, communication directe → plus efficace et rapide<br>
+                    <strong>Pizza Team :</strong> Équipe plus large, plus de coordination nécessaire → risque de ralentissement<br>
+                    <em>→ Pour l'innovation IA, privilégiez les équipes "sandwich" : agiles, autonomes et décisionnaires.</em>
+                </div>
+
+                <h3 style="color: #1a1a1a; margin-top: 1rem; margin-bottom: 0.8rem; font-family: 'Comic Neue', cursive;">🔄 Les 4 phases</h3>
+                <ul>
+                    <li><strong>1️⃣ ÉCOUTER :</strong> Collecter idées et besoins via workshops et plateformes collaboratives</li>
+                    <li><strong>2️⃣ ANALYSER :</strong> Utiliser l'IA pour détecter patterns et prioriser les use cases</li>
+                    <li><strong>3️⃣ PROTOTYPER :</strong> Squads pluridisciplinaires développent des solutions en mode agile</li>
+                    <li><strong>4️⃣ VALIDER :</strong> Tester avec des groupes pilotes et itérer rapidement</li>
+                </ul>
+
+                <div class="dummy-tip" style="margin-top: 1rem;">
+                    <strong>🚀 Adoption en croissance :</strong><br>
+                    De nombreuses start-ups utilisent déjà ce système de champion d'IA dans leurs services, démontrant l'efficacité de cette approche collaborative pour accélérer l'innovation.
+                </div>
+
+                <div class="dummy-warning moderate-warning" style="margin-top: 1rem;">
+                    <strong>⚠️ Pièges à éviter :</strong><br>
+                    🚫 Lab sans sponsorship du COMEX = échec<br>
+                    🚫 Effet "théâtre d'innovation" sans mise en œuvre réelle<br>
+                    🚫 Pas de temps alloué officiellement = démotivation<br>
+                    ✅ La clé : engagement exécutif + budget dédié + cycles courts
+                </div>
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus">
+                    <span class="icon">💬</span>
+                    <h4>TALK DEVOXX</h4>
+                    <div class="resource-title">Didier Girard</div>
+                    <div class="resource-author">Directeur général d'une ESN (société de service dans l'informatique)</div>
+                    <p style="font-size: 0.9rem; text-align: left; margin: 0.5rem 0; line-height: 1.5; font-style: italic; color: #1a1a1a; border-left: 3px solid #FFDD00; padding-left: 0.8rem;">
+                        "Ne cherchez plus 5% de gain, visez x10. Découvrez comment l'agentique transforme l'entreprise en une entité bionique : Humain + Technologie."
+                    </p>
+                </div>
+                <div class="en-savoir-plus">
+                    <span class="icon">💬</span>
+                    <h4>TALK DEVOXX</h4>
+                    <div class="resource-title">Marie Crappe</div>
+                    <div class="resource-author">Directrice Financière</div>
+                    <p style="font-size: 0.9rem; text-align: left; margin: 0.5rem 0; line-height: 1.5; font-style: italic; color: #1a1a1a; border-left: 3px solid #FFDD00; padding-left: 0.8rem;">
+                        "Nous sommes passés de 1 mois à 1 jour pour produire un rapport financier grâce à l'IA."
+                    </p>
+                </div>
+                <div class="en-savoir-plus" style="margin-top: 1rem;">
+                    <a href="https://alan.com/fr-fr/ai" target="_blank" style="text-decoration: none; color: inherit;">
+                        <span class="icon">🏢</span>
+                        <h4>CAS D'USAGE</h4>
+                        <div class="resource-title">Alan : Transformation IA réussie</div>
+                        <div class="resource-author">Assureur santé français</div>
+                        <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                            Découvrez comment Alan a intégré l'IA au cœur de son organisation en impliquant l'ensemble de ses équipes.
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="section-footer" style="grid-column: 1 / -1; text-align: center; margin-top: 0.5rem;">
+                <img src="resources/ChatGPT Image 26 avr. 2026, 10_32_09.png" alt="Framework Leadership Lab Crowd" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+
+        <section id="critical-issues">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Enjeux critiques & vigilance 🔍</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">
+                    Au-delà des aspects techniques, l'IA soulève des questions stratégiques majeures : impact énergétique, contrôle des infrastructures, et transparence de l'industrie. Des éléments à connaître pour décider en conscience.
+                </p>
+            </div>
+            <div class="section-content">
+                <h3 style="color: #1a1a1a; margin-top: 1.5rem; margin-bottom: 0.8rem; font-family: 'Comic Neue', cursive;">⚡ Impact énergétique massif</h3>
+                <ul>
+                    <li class="warning-item"><strong>Consommation colossale :</strong> Un data center = consommation d'une ville de 50 000 habitants. L'explosion de l'IA multiplie ces besoins</li>
+                    <li class="alert-item"><strong>Compétition pour l'électricité :</strong> Data centers vs ménages/hôpitaux/industries sur les réseaux électriques</li>
+                    <li class="warning-item"><strong>Impact carbone :</strong> Majorité de l'énergie encore fossile malgré les promesses "vertes"</li>
+                    <li class="warning-item"><strong>Ressources en eau :</strong> Millions de litres pour le refroidissement, créant des tensions hydriques locales</li>
+                </ul>
+
+                <h3 style="color: #1a1a1a; margin-top: 1.5rem; margin-bottom: 0.8rem; font-family: 'Comic Neue', cursive;">🌊 Câbles sous-marins & souveraineté</h3>
+                <ul>
+                    <li class="info-item"><strong>Infrastructure physique :</strong> 99% du trafic Internet transite par des câbles sous-marins vulnérables au sabotage et à l'espionnage</li>
+                    <li class="alert-item"><strong>Bataille pour Marseille :</strong> Google, Meta, Amazon, Microsoft investissent massivement pour contrôler les points d'atterrissement stratégiques</li>
+                    <li class="warning-item"><strong>Souveraineté des données :</strong> Risque de perte de contrôle des données stratégiques européennes</li>
+                    <li class="info-item"><strong>Contrôle = pouvoir :</strong> Contrôler les câbles = contrôler l'information (espionnage, censure, dépendance)</li>
+                </ul>
+
+                <h3 style="color: #1a1a1a; margin-top: 1.5rem; margin-bottom: 0.8rem; font-family: 'Comic Neue', cursive;">🏢 Opacité de l'industrie</h3>
+                <ul>
+                    <li class="alert-item"><strong>Manque de transparence :</strong> Données fragmentées, chiffres publics incomplets ou optimistes</li>
+                    <li class="alert-item"><strong>Greenwashing :</strong> Objectifs "carbon neutral" via crédits carbone sans réelle réduction des émissions</li>
+                    <li class="warning-item"><strong>Accords secrets :</strong> Contrats avec collectivités couverts par des clauses de confidentialité</li>
+                    <li class="warning-item"><strong>Lobbying intense :</strong> Pour influencer régulations et obtenir avantages fiscaux/énergétiques</li>
+                </ul>
+
+                <div class="dummy-tip" style="margin-top: 1rem;">
+                    <strong>🧭 À retenir :</strong> Ces enjeux ne doivent pas freiner votre transformation IA, mais vous permettre de faire des choix éclairés et responsables. Votre influence en tant que décideur peut pousser l'industrie vers plus de transparence et de responsabilité.
+                </div>
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus">
+                    <span class="icon">💬</span>
+                    <h4>TALK DEVOXX</h4>
+                    <div class="resource-title">Dr. Loup Cellard</div>
+                    <div class="resource-author">Datactivist</div>
+                    <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4; color: #555;">
+                        Chercheur postdoctoral CNRS au sein de l'Observatoire sur l'impact environnemental de l'intelligence artificielle (LISN, Université Paris-Saclay/ENS)
+                    </p>
+                </div>
+                <div class="en-savoir-plus" style="margin-top: 1rem;">
+                    <span class="icon">🌱</span>
+                    <h4>IA FRUGALE</h4>
+                    <div class="resource-title">Optimisation énergétique</div>
+                    <div class="resource-author">Alternative responsable</div>
+                    <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                        Un modèle 10x plus petit peut donner 90% des résultats avec 1% de l'énergie. L'efficacité prime sur la taille.
+                    </p>
+                </div>
+                <div class="en-savoir-plus" style="margin-top: 1rem;">
+                    <span class="icon">🔍</span>
+                    <h4>VIGILANCE</h4>
+                    <div class="resource-title">Transparence exigée</div>
+                    <div class="resource-author">Levier d'action</div>
+                    <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                        Vos choix de fournisseurs sont un levier pour pousser l'industrie vers plus de responsabilité.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="conclusion" style="grid-template-columns: 1fr; grid-template-areas: 'title' 'content';">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>En résumé 🧭</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">
+                    L'IA est une révolution technologique qui nécessite une vision éclairée : mobilisez l'intelligence collective, restez vigilant sur les impacts, et exigez de la transparence.
+                </p>
+            </div>
+            <div class="section-content" style="max-width: 900px; margin: 0 auto;">
+                <div class="highlight-box">
+                    <strong>🎯 Les messages clés :</strong><br>
+                    <br>
+                    <strong>1️⃣ Le sens avant tout</strong> : La technologie ne résout pas tout, le besoin prime sur l'outil<br>
+                    <strong>2️⃣ Leadership Lab Crowd</strong> : Co-créer avec vos équipes pour une adoption optimale<br>
+                    <strong>3️⃣ Enjeux critiques</strong> : Impact énergétique, souveraineté des données, transparence de l'industrie<br>
+                    <strong>4️⃣ Votre pouvoir</strong> : Exigez la transparence et intégrez ces critères dans vos décisions<br>
+                </div>
+
+                <div class="dummy-tip" style="margin-top: 1.5rem;">
+                    <strong>💪 Votre pouvoir de décideur :</strong><br>
+                    Vos choix peuvent pousser l'industrie vers plus de responsabilité. Commencez par un Leadership Lab, mesurez votre empreinte, et privilégiez des partenaires transparents.
+                </div>
+
+                <p style="font-size: 1.1rem; text-align: center; font-weight: 600; color: #1a1a1a; margin-top: 1.5rem; padding: 1rem; background: rgba(255, 221, 0, 0.15); border-radius: 15px;">
+                    <strong>L'IA : un outil puissant à utiliser avec lucidité et responsabilité. 🌍✨</strong>
+                </p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="logo-container">
+            <img src="resources/logo.png" alt="Logo" style="height: 80px;">
+        </div>
+        <p>&copy; 2026 AI Overview - Guide Direction - Réalisé par Vanessa ROY, assistée par l'IA 🤝 ... ou l'inverse on ne sait plus :D</p>
+    </footer>
+</body>
+</html>

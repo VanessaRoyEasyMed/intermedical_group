@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Intelligence Artificielle pour les Nuls</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: #2c2c2c;
+        }
+
+        header {
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 100%);
+            color: #FFDD00;
+            padding: 3rem 2rem; /* Augmenter la hauteur du header */
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 5px solid #FFDD00;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(255,221,0,0.1)"/><circle cx="90" cy="20" r="1" fill="rgba(255,221,0,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,221,0,0.1)"/></svg>');
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+            margin-left: 20px;
+            transform: rotate(-2deg);
+        }
+
+        header .subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-top: 0.5rem;
+            color: #FFDD00;
+            font-style: italic;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            background: none; /* Supprimer l'encart jaune */
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        section {
+            margin-bottom: 0.5rem;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 1.5rem;
+            grid-template-areas:
+                "title title"
+                "content sidebar";
+        }
+
+        section h2 {
+            grid-area: title;
+            color: #1a1a1a;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            background: linear-gradient(45deg, #FFDD00, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .section-content {
+            grid-area: content;
+            min-width: 0; /* Pour éviter les débordements */
+        }
+
+        .section-sidebar {
+            grid-area: sidebar;
+            position: relative;
+        }
+
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #FFDD00, #FFA500, #FFDD00);
+            z-index: -1;
+            border-radius: 23px;
+        }
+
+        section:hover {
+            transform: none;
+            transition: none;
+        }
+
+        section h2 {
+            color: #1a1a1a;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            background: linear-gradient(45deg, #FFDD00, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        section h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #FFDD00, #FFA500);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #FFDD00 0%, #FFF200 100%);
+            padding: 1.2rem;
+            border-left: 8px solid #FF6B35;
+            margin: 0.5rem 0;
+            border-radius: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 221, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '💡';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+
+        .dummy-tip {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .dummy-tip::before {
+            content: '🎯';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .dummy-warning {
+            background: linear-gradient(135deg, #FF5722 0%, #E64A19 100%);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        .dummy-warning.moderate-warning {
+            background: linear-gradient(135deg, #FF9800 0%, #FFC107 100%);
+            color: #333;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .dummy-warning::before {
+            content: '⚠️';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(45deg, #000000 0%, #1a1a1a 100%);
+            color: #FFDD00;
+            margin-top: 0.5rem;
+            border-top: 5px solid #FFDD00;
+        }
+
+        footer .logo-container {
+            margin-right: 2rem;
+        }
+
+        footer .logo-container img {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        footer p {
+            flex: 1;
+            margin: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 0.5rem auto;
+            display: block;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 3px solid #FFDD00;
+        }
+
+        ul {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            background: rgba(255, 221, 0, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #FFDD00;
+            position: relative;
+        }
+
+        .myth-item {
+            background: rgba(255, 87, 34, 0.1);
+            border-left: 4px solid #FF5722;
+        }
+
+        .ok-item {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+        }
+
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+
+        .page-decoration {
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .decoration-1 { top: 10%; right: 5%; content: '🤖'; }
+        .decoration-2 { top: 50%; left: 2%; content: '💡'; }
+        .decoration-3 { bottom: 20%; right: 8%; content: '⚡'; }
+
+        .en-savoir-plus {
+            background: rgba(248, 249, 250, 0.95);
+            border: 1px solid rgba(233, 236, 239, 0.8);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .en-savoir-plus h4 {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .en-savoir-plus .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .en-savoir-plus .resource-title {
+            font-weight: 600;
+            color: #212529;
+            margin: 0.5rem 0 0.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        .en-savoir-plus .resource-author {
+            color: #6c757d;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .en-savoir-plus a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .en-savoir-plus:hover {
+            background: #e9ecef;
+            border-color: #FFDD00;
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+
+        @media (max-width: 1200px) {
+            section {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "title"
+                    "content"
+                    "sidebar";
+                gap: 1.2rem;
+            }
+
+            main {
+                max-width: 800px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                padding: 1rem;
+                max-width: 100%;
+            }
+
+            section {
+                padding: 1.2rem;
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "title"
+                    "content"
+                    "sidebar";
+                gap: 1rem;
+            }
+
+
+            .en-savoir-plus {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>L'Intelligence Artificielle pour les Nuls 🤖</h1>
+            <p class="subtitle">Démystifier l'IA simplement et efficacement</p>
+        </div>
+    </header>
+    <main>
+        <section id="introduction">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Bienvenue dans l'univers de l'IA !</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">Ce guide est né d'une conférence de plusieurs jours sur le développement informatique, rythmée par de nombreuses interventions inspirantes. Sans entrer dans les détails techniques, ce document a été préparé avec l'aide de l'IA pour partager quelques clés de compréhension de cet outil, explorer ses usages et faire tomber certaines idées reçues.</p>
+            </div>
+            <div class="section-content">
+                <div class="highlight-box">
+                    <strong>📚 Ce que vous allez découvrir :</strong><br>
+                    ✨ Comment fonctionne réellement l'IA<br>
+                    🧠 Les mythes à oublier absolument<br>
+                    🎯 Les bonnes pratiques pour bien l'utiliser<br>
+                    ⚠️ Les risques à connaître<br>
+                </div>
+
+                <p style="font-size: 1.1rem; text-align: center; font-weight: 500; color: #2c2c2c; margin-top: 1rem;">
+                    <strong>Bonne lecture et bonne exploration ! 🌟</strong>
+                </p>
+            </div>
+            <div class="section-sidebar">
+                <a href="https://www.devoxx.fr/" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="en-savoir-plus">
+                        <span class="icon">🎓</span>
+                        <h4>CONFÉRENCE DEVOXX</h4>
+                        <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                            Devoxx est une série de conférences destinées aux développeurs et aux passionnés de nouvelles technologies, incluant l'intelligence artificielle.
+                        </p>
+                        <p style="font-size: 0.8rem; font-weight: 600; color: #4CAF50; margin: 0;">
+                            <strong>Inspiration :</strong> Ce guide découle de ces échanges !
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section id="ai-basics">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Comment ça marche ?</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">L'intelligence artificielle, ou IA, est un outil qui permet aux machines de résoudre des problèmes ou d'accomplir des tâches en imitant certains aspects de l'intelligence humaine. Voici une synthèse simple pour comprendre son fonctionnement :</p>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <li><strong>🧠 Le "cerveau" (le modèle IA) :</strong> prédit le mot suivant à partir de vastes données, sans “réflexion” humaine.</li>
+                    <li><strong>📦 Le "contexte window" (mémoire courte) :</strong> mémoire courte de la discussion, limitée en taille. 👉 Petite fenêtre = oublis rapides. 👉 Grande fenêtre = conversation plus logique et suivie.</li>
+                    <li><strong>⚡ La "puissance du modèle" :</strong> plus il est grand, plus il est précis et cohérent (mais plus lent).</li>
+                    <li><strong>🔁 Comment ça marche ensemble :</strong> question + contexte → génération mot par mot pour former la réponse.</li>
+                </ul>
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus" style="margin-top: 0.5rem;">
+                    <a href="resources/ChatGPT Image 26 avr. 2026, 10_37_11.png" target="_blank">
+                        <span class="icon">📖</span>
+                        <h4>EN SAVOIR PLUS</h4>
+                        <div class="resource-title">Système 1, Système 2</div>
+                        <div class="resource-author">Daniel Kahneman</div>
+                        <img src="resources/ChatGPT Image 26 avr. 2026, 10_37_11.png" alt="Illustration du système 1 et système 2" style="margin-top: 0.5rem; border: none; border-radius: 8px; max-width: 100%;">
+                    </a>
+                </div>
+            </div>
+            <div class="section-footer" style="grid-column: 1 / -1; text-align: center; margin-top: 0.5rem;">
+                <img src="resources/f5908130-25d5-494e-816e-7eb88604738d.png" alt="Illustration complémentaire du fonctionnement de l'IA" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+        <section id="ai-myths">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Cassons les mythes !</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;"><strong>⚠️ Attention aux idées reçues !</strong><br>
+                    Beaucoup de gens pensent connaître l'IA, mais la réalité est souvent différente...<br>
+                    Découvrez les idées reçues les plus courantes sur l'IA :</p>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <li class="myth-item"><strong>❌ L'IA dit toujours la vérité</strong><br>
+                        Elle génère ce qui est le plus probable, sans distinguer vrai du faux.
+                    </li>
+                    <li class="myth-item"><strong>❌ L'IA est neutre</strong><br>
+                        Elle reflète ses données d'entraînement et leurs biais culturels.
+                    </li>
+                    <li class="myth-item"><strong>❌ L'IA sait tout</strong><br>
+                        Elle est limitée par ses données et peut se tromper ou inventer.
+                    </li>
+                    <li class="myth-item"><strong>❌ L'IA va remplacer les humains</strong><br>
+                        C'est un outil. L'humain reste clé pour la stratégie, le jugement et la créativité.
+                    </li>
+                </ul>
+
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus" style="margin-top: 0.5rem;">
+                    <a href="https://www.linkedin.com/in/laurence-devillers-09679a237/" target="_blank">
+                        <span class="icon">📖</span>
+                        <h4>EN SAVOIR PLUS</h4>
+                        <div class="resource-title">Savoir vivre avec l'IA <br>
+                            L'IA, ange ou démon ?</div>
+                        <div class="resource-author">Laurence Devillers</div>
+                        <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                            Laurence Devillers, chercheuse en IA et spécialiste des interactions humain-machine, démystifie l'intelligence artificielle. Elle donne de nombreuses conférences pour expliquer les enjeux éthiques et sociétaux de l'IA.
+                        </p>
+                        <p style="font-size: 0.8rem; font-weight: 600; color: #4CAF50; margin: 0;">
+                            <strong>Experte reconnue</strong> qui casse les idées reçues !
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="section-footer" style="grid-column: 1 / -1; text-align: center; margin-top: 0.5rem;">
+                <img src="resources/299feb70-88d5-4984-9605-d226f2b760e6.png" alt="Illustration des mythes de l'IA" style="max-width: 50%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+        <section id="ai-best-practices">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Les bonnes pratiques pour l'IA</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">Pour tirer le meilleur parti de l'IA, il est essentiel de suivre ces bonnes pratiques :</p>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <li class="ok-item"><strong>💬 Injecter du contexte :</strong> L'IA ne peut pas deviner. Fournissez-lui des informations claires et précises pour qu'elle puisse répondre de manière pertinente.</li>
+                    <li class="ok-item"><strong>📏 Limiter la taille des conversations :</strong> Évitez les prompts trop longs pour réduire les risques d'hallucinations et améliorer la qualité des réponses.</li>
+                    <li class="ok-item"><strong>✂️ Éviter les détails inutiles :</strong> Supprimez les éléments superflus ou trop polis, car ils consomment des ressources et polluent le prompt.</li>
+                    <li class="ok-item"><strong>🎈 Utiliser un langage simple :</strong> Parlez à l'IA comme à un enfant, avec des exemples concrets et faciles à comprendre.</li>
+                    <li class="ok-item"><strong>🔍 Garder un sens critique :</strong> Ne prenez pas les réponses de l'IA pour acquises. Analysez et réfléchissez à ses retours.</li>
+                    <li class="ok-item"><strong>📋 Structurer vos demandes :</strong> Une demande claire et bien organisée permet d'éviter que l'IA ne produise des réponses chaotiques.</li>
+                    <li class="ok-item"><strong>⏰ Utiliser le temps gagné :</strong> Profitez du temps libéré par l'IA pour vous concentrer sur des activités à forte valeur ajoutée comme la stratégie, la créativité ou approfondir vos connaissances.</li>
+                </ul>
+            </div>
+            <div class="section-sidebar">
+
+                <div class="en-savoir-plus" style="margin-top: 0.5rem;">
+                    <span class="icon">♟️</span>
+                    <h4>ANECDOTE</h4>
+                    <div class="resource-title">La leçon de Laurent Fressinet</div>
+                    <div class="resource-author">Grand maître d'échecs vs Judit Polgár</div>
+                    <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                        Laurent Fressinet avait préparé un plan avec l'IA face à Judit Polgár. Mais pendant la partie, il n'a pas su prendre du recul, remettre en question sa stratégie et s'adapter. Il a suivi aveuglément son plan... et a perdu.
+                    </p>
+                    <p style="font-size: 0.8rem; font-weight: 600; color: #FF5722; margin: 0;">
+                        <strong>Morale :</strong> Même avec l'IA, gardez votre réflexion critique !
+                    </p>
+                </div>
+
+                <div class="en-savoir-plus" style="margin-top: 0.5rem;">
+                    <a href="https://fr.wikisource.org/wiki/Le_Droit_à_la_paresse" target="_blank">
+                        <span class="icon">⏰</span>
+                        <h4>EN SAVOIR PLUS</h4>
+                        <div class="resource-title">Le Droit à la paresse</div>
+                        <div class="resource-author">Paul Lafargue (1880)</div>
+                        <p style="font-size: 0.85rem; text-align: left; margin: 0.5rem 0; line-height: 1.4;">
+                            Paul Lafargue y défend l'idée révolutionnaire que le progrès technique devrait libérer l'humanité du travail excessif. Il prône l'utilisation du temps libre pour la créativité, la culture et l'épanouissement personnel.
+                        </p>
+                        <p style="font-size: 0.8rem; font-weight: 600; color: #4CAF50; margin: 0;">
+                            <strong>Pertinence IA :</strong> Automatiser pour libérer du temps créatif !
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="section-footer" style="grid-column: 1 / -1; text-align: center; margin-top: 0.5rem;">
+                <img src="resources/1fdedfed-f3d0-4d22-96b5-684bb1c0bc4d.png" alt="Illustration des bonnes pratiques pour l'IA" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+        <section id="ai-risks" style="grid-template-areas: 'title title' 'content content';">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Les risques associés à l'IA</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">                    <strong>🛡️ Restez vigilants !</strong><br>
+                    L'IA est un outil puissant, mais comme tout outil puissant, il faut savoir l'utiliser avec précaution.</p>
+            </div>
+            <div class="section-content" style="max-width: none;">
+                <ul>
+                    <li class="myth-item"><strong>🎭 Biais dans les données et les algorithmes :</strong> Les résultats peuvent être influencés par des données biaisées.</li>
+                    <li class="myth-item"><strong>🔐 Perte de confidentialité des données :</strong> Les informations personnelles peuvent être exposées si elles ne sont pas protégées.</li>
+                    <li class="myth-item"><strong>💀 Utilisation malveillante de l'IA :</strong> L'IA peut être exploitée à des fins nuisibles.</li>
+                    <li class="myth-item"><strong>💝 Dépendance affective :</strong> Une utilisation excessive de l'IA peut créer une dépendance émotionnelle, réduisant les interactions humaines.</li>
+                    <li class="myth-item"><strong>🧠 Dette cognitive :</strong> En s'appuyant trop sur l'IA, on risque de perdre des compétences essentielles et de diminuer notre capacité à réfléchir par nous-mêmes.</li>
+                    <li class="myth-item"><strong>😴 Ennui :</strong> L'automatisation excessive peut rendre certaines tâches ou activités monotones, réduisant l'engagement et la satisfaction.</li>
+                </ul>
+            </div>
+            <div class="section-footer" style="grid-column: 1 / -1; text-align: center; margin-top: 0.5rem;">
+                <img src="resources/ba71b411-2f72-49ce-8f11-12e5627ad334.png" alt="Illustration des risques associés à l'IA" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+        <section id="conclusion">
+            <div style="text-align: center; margin-bottom: 0.5rem; grid-area: title; margin-top: 0.5rem;">
+                <h2>Conclusion</h2>
+                <p style="font-weight: 500; margin: 0 auto; max-width: 800px; line-height: 1.6; color: #555;">L'IA offre des opportunités incroyables, mais il est crucial de l'utiliser de manière responsable. De nouveaux modèles émergent, tels que le "world model", qui promettent d'améliorer encore davantage les capacités de l'IA.</p>
+            </div>
+            <div class="section-content">
+
+                <div class="highlight-box">
+                    <strong>🙏 Merci de votre visite !</strong><br>
+                    J'espère que ce petit guide vous aura aidé à mieux comprendre l'IA.<br>
+                    Pensez à enregistrer les images qui résumment les différentes sections.<br>
+                    N'hésitez pas à l'utiliser, mais toujours avec discernement !
+                </div>
+
+                <div class="dummy-warning moderate-warning">
+                    <strong>⚠️ IA : à consommer avec modération !</strong><br>
+                    <br>
+                    Comme le bon vin ou le chocolat, l'IA c'est délicieux... mais attention aux excès !<br>
+                    <br>
+                    🧠 Effets secondaires possibles : perte de neurones, dépendance au prompt engineering, et syndrome du "mais-comment-on-faisait-avant" 😅<br>
+                    <br>
+                    💊 Posologie recommandée : 1 dose de réflexion critique pour 3 doses d'IA !
+                </div>
+            </div>
+            <div class="section-sidebar">
+                <div class="en-savoir-plus">
+                    <a href="resources/ChatGPT Image 26 avr. 2026, 10_23_34.png" target="_blank">
+                        <span class="icon">🔍</span>
+                        <h4>EN SAVOIR PLUS</h4>
+                        <div class="resource-title">L'avenir des modèles d'IA</div>
+                        <div class="resource-author">World Model</div>
+                        <p style="font-size: 0.85rem; text-align: left; margin: 0.2rem 0; line-height: 1.4;">
+                            Ils représentent la prochaine génération d'IA capable de comprendre et de simuler le monde réel.
+                        </p>
+                        <img src="resources/ChatGPT Image 26 avr. 2026, 10_23_34.png" alt="Illustration des nouveaux modèles IA et world models" style="margin-top: 0.5rem; border: none; border-radius: 8px; max-width: 100%;">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="logo-container">
+            <img src="resources/logo.png" alt="Logo" style="height: 100px;">
+        </div>
+        <p>&copy; 2026 AI Overview - Réalisé par Vanessa ROY, assistée par l'IA 🤝 ... ou l'inverse on ne sait plus :D</p>
+    </footer>
+</body>
+</html>
